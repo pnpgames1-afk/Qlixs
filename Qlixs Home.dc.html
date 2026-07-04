@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"><style>
+:root{--bg:oklch(98% 0.006 260);--fg:oklch(16% 0.02 260);--muted:oklch(46% 0.02 260);--line:oklch(90% 0.008 260);--card:#fff;--primary:#3c83f6;--primary-dark:oklch(38% 0.16 258);--primary-tint:oklch(95% 0.03 258);--primary-tint2:oklch(90% 0.05 258);--warm:oklch(85% 0.15 85);--warm-dark:oklch(45% 0.13 75);--dark:oklch(17% 0.03 258)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.disp{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+.serif{font-family:'Instrument Serif',serif;font-style:italic;letter-spacing:-0.01em;font-weight:400}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.container{max-width:1240px;margin:0 auto;padding:0 32px}
+.section{padding:80px 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:100px;font-weight:600;font-size:15px;padding:14px 26px;cursor:pointer;border:none;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 8px 20px -8px oklch(60% 0.18 258 / 0.5)}
+.btn-primary:hover{background:oklch(58% 0.19 258);box-shadow:0 12px 24px -8px oklch(60% 0.18 258 / 0.6)}
+.btn-dark{background:var(--fg);color:#fff}
+.btn-dark:hover{background:var(--primary)}
+.btn-ghost{background:transparent;color:var(--fg);border:1.5px solid var(--fg)}
+.btn-ghost:hover{background:var(--fg);color:#fff}
+.btn-outline-light{background:transparent;color:var(--bg);border:1.5px solid oklch(50% 0.02 260)}
+.btn-outline-light:hover{background:oklch(24% 0.03 258);border-color:var(--bg)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--fg);border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:100px;text-transform:uppercase}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 4px oklch(70% 0.15 258 / .3)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px}
+.hi-underline{background:linear-gradient(transparent 62%,oklch(88% 0.11 258 / .7) 62% 92%,transparent 92%);padding:0 4px}
+.hi-yellow{background:linear-gradient(transparent 62%,var(--warm) 62% 92%,transparent 92%);padding:0 4px}
+.nav-links{display:none}
+@media (min-width:880px){.nav-links{display:flex}}
+.nav-item{position:relative}
+.nav-item::after{content:'';position:absolute;top:100%;left:0;right:0;height:10px}
+.nav-btn{background:transparent;border:none;color:var(--fg);font:inherit;font-size:14px;font-weight:500;cursor:pointer;padding:8px 0;display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+.nav-btn .chev{font-size:9px;opacity:.55;transition:transform .2s ease}
+.nav-item:hover .nav-btn .chev,.nav-item:focus-within .nav-btn .chev{transform:rotate(180deg);opacity:.9}
+.nav-dropdown{position:absolute;top:calc(100% + 10px);left:-14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px;min-width:240px;box-shadow:0 24px 48px -20px oklch(20% 0.02 260 / .22),0 2px 6px -2px oklch(20% 0.02 260 / .08);display:flex;flex-direction:column;gap:2px;z-index:60;opacity:0;transform:translateY(-6px);pointer-events:none;transition:opacity .2s ease,transform .2s ease}
+.nav-item:hover .nav-dropdown,.nav-item:focus-within .nav-dropdown{opacity:1;transform:none;pointer-events:auto}
+.nav-dropdown a{padding:10px 12px;border-radius:9px;color:var(--fg);text-decoration:none;font-size:13.5px;font-weight:500;transition:background .15s,color .15s;display:block}
+.nav-dropdown a:hover{background:var(--primary-tint);color:var(--primary-dark)}
+.hero-h1{font-size:clamp(56px,9vw,120px);line-height:.94;letter-spacing:-0.045em;font-weight:600;margin:0}
+.rotate-neg{transform:rotate(-3deg)}
+.rotate-pos{transform:rotate(4deg)}
+.marquee{overflow:hidden;border-top:1px solid var(--fg);border-bottom:1px solid var(--fg);background:var(--fg);color:var(--bg)}
+.marquee-track{display:flex;gap:56px;animation:mq 32s linear infinite;padding:18px 0;white-space:nowrap;width:max-content}
+@keyframes mq{to{transform:translateX(-50%)}}
+.mq-item{display:inline-flex;align-items:center;gap:20px;font-family:'Space Grotesk';font-weight:500;font-size:22px}
+.mq-item span.star{color:var(--primary);font-size:14px}
+.grid-bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;grid-auto-rows:minmax(180px,auto)}
+.big-num{font-family:'Space Grotesk';font-weight:600;font-size:180px;line-height:.85;letter-spacing:-.05em;color:transparent;-webkit-text-stroke:1.5px var(--fg)}
+.stat-num{font-family:'Space Grotesk';font-weight:600;font-size:64px;line-height:1;letter-spacing:-.03em}
+.tick{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--primary-tint2);color:var(--primary-dark);flex-shrink:0}
+.tick svg{width:10px;height:10px}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;background:var(--primary-tint);color:var(--primary-dark)}
+.dashed-line{background-image:linear-gradient(90deg,var(--line) 50%,transparent 50%);background-size:14px 1px;background-repeat:repeat-x;height:1px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.grid-3>*{min-width:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:900px){.grid-bento{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr}.hero-h1{font-size:clamp(44px,10vw,72px)}}
+.spot{position:absolute;border-radius:50%;filter:blur(80px);z-index:0;pointer-events:none}
+.wave{display:inline-flex;gap:3px;align-items:end;height:32px}
+.wave i{display:block;width:3px;background:var(--fg);border-radius:2px;animation:wv 1.2s ease-in-out infinite}
+.wave i:nth-child(1){height:30%;animation-delay:0s}.wave i:nth-child(2){height:70%;animation-delay:.15s}.wave i:nth-child(3){height:100%;animation-delay:.3s}.wave i:nth-child(4){height:60%;animation-delay:.45s}.wave i:nth-child(5){height:85%;animation-delay:.6s}.wave i:nth-child(6){height:40%;animation-delay:.75s}.wave i:nth-child(7){height:75%;animation-delay:.9s}
+@keyframes wv{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+.plan-feat{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5}
+.plan-feat .tick{margin-top:2px}
+.plan-feat.dim{opacity:.55}
+
+/* wow: scroll reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.18s}.reveal.d3{transition-delay:.28s}.reveal.d4{transition-delay:.38s}.reveal.d5{transition-delay:.48s}.reveal.d6{transition-delay:.58s}
+
+/* card hover lift */
+.card,.grid-3>div,.grid-bento>div{transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s cubic-bezier(.2,.7,.2,1)}
+.card:hover,.grid-bento>div:hover{transform:translateY(-6px);box-shadow:0 30px 60px -30px oklch(20% 0.03 258 / .22)}
+
+/* hero heading line reveal */
+@keyframes lineIn{from{transform:translateY(105%);opacity:0}to{transform:none;opacity:1}}
+.line-wrap{display:inline-block;overflow:hidden;padding-bottom:.06em;padding-right:.06em;margin-right:-.06em;vertical-align:top}
+.line-wrap>span{display:inline-block;animation:lineIn 1s cubic-bezier(.2,.75,.2,1) both}
+.line-wrap.l1>span{animation-delay:.05s}
+.line-wrap.l2>span{animation-delay:.22s}
+
+/* floating stickers sway */
+@keyframes sway1{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(-1deg) translateY(-4px)}}
+@keyframes sway2{0%,100%{transform:rotate(5deg) translateY(0)}50%{transform:rotate(2deg) translateY(-5px)}}
+.sticker-a{animation:sway1 5s ease-in-out infinite}
+.sticker-b{animation:sway2 5.6s ease-in-out infinite}
+
+/* pulse for REC */
+@keyframes pulseRec{0%,100%{box-shadow:0 0 0 0 oklch(65% 0.22 25 / .55)}70%{box-shadow:0 0 0 14px oklch(65% 0.22 25 / 0)}}
+.pulse-rec{animation:pulseRec 1.6s ease-out infinite}
+@keyframes blink{0%,60%{opacity:1}70%,100%{opacity:.2}}
+.blink{animation:blink 1.4s ease-in-out infinite}
+
+/* animated gradient */
+.grad-anim{background-size:220% 220% !important;animation:gradShift 10s ease infinite}
+@keyframes gradShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* hero blobs float */
+@keyframes blob1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-20px) scale(1.08)}}
+@keyframes blob2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-30px,25px) scale(1.1)}}
+.blob-a{animation:blob1 14s ease-in-out infinite}
+.blob-b{animation:blob2 16s ease-in-out infinite}
+
+/* parallax spots follow mouse */
+.spot{transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+
+/* highlight underline draw-in */
+@keyframes drawUnderline{from{background-size:0% 30%}to{background-size:100% 30%}}
+.hi-underline{background-repeat:no-repeat;background-position:0 80%;background-size:0% 30%;animation:drawUnderline 1.2s cubic-bezier(.4,0,.2,1) 1s forwards;background-image:linear-gradient(oklch(88% 0.11 258 / .7),oklch(88% 0.11 258 / .7))}
+
+/* stat count-up initial opacity */
+.count-up{font-variant-numeric:tabular-nums}
+
+/* button press ripple-ish */
+.btn{position:relative;overflow:hidden}
+.btn:active{transform:translateY(1px) scale(.98)}
+
+/* marquee hover pause */
+.marquee:hover .marquee-track{animation-play-state:paused}
+
+/* ask qlixs typing */
+@keyframes typing{0%{width:0}70%,100%{width:100%}}
+@keyframes cursor{0%,49%{opacity:1}50%,100%{opacity:0}}
+.typing-line{overflow:hidden;white-space:nowrap;border-right:1.5px solid var(--primary-dark);animation-name:typing,cursor;animation-duration:6s,.8s;animation-timing-function:steps(28,end),step-end;animation-iteration-count:1,infinite;animation-delay:2s,2s;animation-fill-mode:both}
+
+/* wobble on hover for stickers */
+.sticker-a:hover,.sticker-b:hover{animation-play-state:paused}
+
+@media (prefers-reduced-motion:reduce){.reveal,.line-wrap>span,.blob-a,.blob-b,.sticker-a,.sticker-b,.pulse-rec,.grad-anim,.typing-line{animation:none !important;transition:none !important;opacity:1 !important;transform:none !important}}
+</style><template id="__bundler_thumbnail" data-bg-color="#f7f7f5"><svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#f7f7f5"/><rect x="500" y="300" width="200" height="200" rx="60" fill="#3c83f6"/><text x="600" y="440" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="140" fill="#fff">Q</text></svg></template></helmet>
+
+<header class="fx ac jb" style="position:sticky;top:0;z-index:50;background:oklch(98% 0.006 260 / 0.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)">
+<div class="container fx ac jb" style="height:72px;width:100%">
+<div class="fx ac gap10">
+<div class="fx ac jc disp fw7" style="width:34px;height:34px;border-radius:10px;background:var(--primary);color:#fff;font-size:17px">Q</div>
+<span class="disp fw7 fs20">Qlixs</span>
+</div>
+<nav class="nav-links ac gap24">
+<div class="nav-item"><button class="nav-btn">Product <span class="chev">▼</span></button><div class="nav-dropdown"><a href="browser-extension.html">Browser Extension</a><a href="mobile.html">Mobile App</a></div></div>
+<div class="nav-item"><button class="nav-btn">Solutions <span class="chev">▼</span></button><div class="nav-dropdown"><a href="recruitment-meetings.html">Recruitment and Meetings</a></div></div>
+<div class="nav-item"><button class="nav-btn">Resources <span class="chev">▼</span></button><div class="nav-dropdown"><a href="help.html">Help Centre / FAQs</a><a href="security.html">Compliance / Security</a></div></div>
+<div class="nav-item"><button class="nav-btn">Company <span class="chev">▼</span></button><div class="nav-dropdown"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy.html">Privacy Policy</a></div></div>
+<a href="pricing.html" class="nav-btn" style="padding:8px 0">Pricing</a>
+</nav>
+<div class="fx ac gap10">
+<a href="login.html" class="btn btn-ghost" style="padding:10px 18px;font-size:13px">Log in</a>
+<a href="signup.html" class="btn btn-primary" style="padding:10px 20px;font-size:13px">Start Free Trial →</a>
+</div>
+</div>
+</header>
+
+<section id="hero-parallax" style="position:relative;padding:60px 0 40px">
+<div class="spot blob-a" style="width:520px;height:520px;background:var(--primary);top:-60px;right:-140px;opacity:.22"></div>
+<div class="spot blob-b" style="width:420px;height:420px;background:var(--warm);bottom:-120px;left:-160px;opacity:.32"></div>
+<div class="container" style="position:relative;z-index:1">
+
+<div class="fx ac gap12 wrap" style="margin-bottom:36px">
+<span class="eyebrow"><span class="dot"></span>AI conversation capture · Live</span>
+<div class="fx ac gap8 fs12 mono" style="color:var(--muted)">
+<div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<span>listening…</span>
+</div>
+</div>
+
+<h1 class="hero-h1"><span class="line-wrap l1"><span>One app. <span class="serif" style="font-size:1.02em">Unlimited</span></span></span><br><span class="line-wrap l2"><span>op<span class="hi-underline">portunities.</span></span></span></h1>
+
+<div class="fx jb ac wrap gap24" style="margin-top:44px">
+<p style="max-width:540px;font-size:19px;line-height:1.5;color:var(--muted);margin:0">Qlixs helps teams capture conversations, streamline interviews, and turn meetings into structured data—so you can grow faster and make informed decisions.</p>
+<div class="fx col gap12" style="min-width:260px">
+<div class="fx ac gap10"><a href="#pricing" class="btn btn-primary" style="padding:16px 30px;font-size:16px">Start your free trial</a><a href="#how" class="btn btn-ghost" style="padding:16px 24px;font-size:16px">Watch demo ↗</a></div>
+<div class="fx ac gap10 fs13" style="color:var(--muted)"><span style="color:var(--primary)">★★★★★</span><span><span class="count-up" data-count="4.9" data-decimals="1">0</span> · trusted by <span class="count-up" data-count="1200" data-suffix="+">0</span> teams</span></div>
+</div>
+</div>
+
+<div style="position:relative;margin-top:56px">
+<div class="sticker-a" style="position:absolute;top:-18px;left:36px;z-index:3;background:var(--warm);border:1.5px solid var(--fg);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600">🎙 Live call</div>
+<div class="sticker-b serif" style="position:absolute;top:20px;right:28px;z-index:3;font-size:26px;color:var(--primary-dark)">instantly →</div>
+
+<div class="grid-2" style="gap:20px">
+<div class="card" style="padding:28px;border-color:var(--fg);border-width:1.5px">
+<div class="fx ac jb" style="margin-bottom:20px">
+<div class="fx ac gap10"><div class="pulse-rec" style="width:10px;height:10px;border-radius:50%;background:oklch(65% 0.22 25)"></div><span class="mono fs12" style="color:var(--muted)">01:24:18 · transcript</span></div>
+<span class="tag blink" style="background:oklch(93% 0.06 25);color:oklch(45% 0.15 25)">● REC</span>
+</div>
+<div class="fx col gap14">
+<div><span class="mono fs11 fw6" style="color:var(--primary-dark)">[00:04]</span><div class="fs14" style="margin-top:2px;line-height:1.5">We need a rollout plan by end of the quarter — otherwise the launch slips.</div></div>
+<div><span class="mono fs11 fw6" style="color:var(--warm-dark)">[00:11]</span><div class="fs14" style="margin-top:2px;line-height:1.5">Agreed — I'll send the roadmap Friday, right after the engineering sync.</div></div>
+<div><span class="mono fs11 fw6" style="color:var(--primary-dark)">[00:18]</span><div class="fs14" style="margin-top:2px;line-height:1.5">And please — include the Zoom integration budget.</div></div>
+</div>
+</div>
+<div class="fx col gap14">
+<div class="card" style="padding:22px;background:var(--fg);color:var(--bg);border-color:var(--fg)">
+<div class="fx ac jb" style="margin-bottom:14px"><span class="fs11 mono upper" style="color:var(--primary);letter-spacing:.08em">Summary card</span><span class="serif" style="font-size:18px;color:var(--primary)">by Qlixs</span></div>
+<div class="disp fw6" style="font-size:22px;line-height:1.2;margin-bottom:12px">Q4 Launch Sync</div>
+<div class="fx col gap8" style="font-size:13px;line-height:1.5">
+<div class="fx ac gap8"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Roadmap → send by Friday</div>
+<div class="fx ac gap8"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Zoom budget → confirm with finance</div>
+<div class="fx ac gap8"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Engineering sync → Mon 10:00</div>
+</div>
+</div>
+<div class="card" style="padding:16px 18px;border-style:dashed;background:transparent">
+<div class="fx ac gap10"><span class="mono fs11 fw6" style="color:var(--primary-dark);background:var(--primary-tint);padding:3px 8px;border-radius:6px">Ask Qlixs</span><span class="fs13" style="color:var(--muted)">Who owns the Zoom budget?</span></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<div class="marquee">
+<div class="marquee-track">
+<div class="mq-item">Zoom<span class="star">✦</span></div><div class="mq-item">Google Meet<span class="star">✦</span></div><div class="mq-item">Microsoft Teams<span class="star">✦</span></div><div class="mq-item">Slack<span class="star">✦</span></div><div class="mq-item">Notion<span class="star">✦</span></div><div class="mq-item">HubSpot<span class="star">✦</span></div><div class="mq-item">Salesforce<span class="star">✦</span></div><div class="mq-item">Linear<span class="star">✦</span></div>
+<div class="mq-item">Zoom<span class="star">✦</span></div><div class="mq-item">Google Meet<span class="star">✦</span></div><div class="mq-item">Microsoft Teams<span class="star">✦</span></div><div class="mq-item">Slack<span class="star">✦</span></div><div class="mq-item">Notion<span class="star">✦</span></div><div class="mq-item">HubSpot<span class="star">✦</span></div><div class="mq-item">Salesforce<span class="star">✦</span></div><div class="mq-item">Linear<span class="star">✦</span></div>
+</div>
+</div>
+
+<section class="section" id="how">
+<div class="container">
+<div class="fx jb ac wrap gap24 reveal" style="margin-bottom:60px">
+<div style="max-width:640px">
+<span class="eyebrow"><span class="dot"></span>How it works · 3 steps</span>
+<h2 class="disp" style="font-size:clamp(36px,5vw,64px);font-weight:600;margin:16px 0 0">Simple as <span class="serif">a conversation</span>.</h2>
+</div>
+<p style="max-width:340px;color:var(--muted);font-size:15px;line-height:1.6;margin:0">Generated instantly from real conversations — no more manual note-taking.</p>
+</div>
+
+<div class="grid-3">
+<div class="card reveal d1" style="padding:32px;position:relative;overflow:hidden">
+<div class="big-num" style="position:absolute;top:-30px;right:-10px;opacity:.9">01</div>
+<div class="fx col gap12" style="position:relative">
+<span class="tag" style="align-self:flex-start">Step 1</span>
+<h3 class="disp fw6" style="font-size:24px;margin:8px 0 0">Capture</h3>
+<p style="color:var(--muted);font-size:14px;line-height:1.6;margin:0">Launch the Qlixs mobile app to start an interview or conversation from anywhere. Begin capturing the conversation instantly so every important detail is documented in real time.</p>
+<div class="fx ac gap8" style="margin-top:16px"><span class="mono fs11" style="background:var(--primary-tint);color:var(--primary-dark);padding:4px 8px;border-radius:6px">iOS</span><span class="mono fs11" style="background:var(--primary-tint);color:var(--primary-dark);padding:4px 8px;border-radius:6px">Chrome</span><span class="mono fs11" style="background:var(--primary-tint);color:var(--primary-dark);padding:4px 8px;border-radius:6px">Zoom</span></div>
+</div>
+</div>
+<div class="card reveal d2" style="padding:32px;position:relative;overflow:hidden;background:var(--fg);color:var(--bg);border-color:var(--fg)">
+<div class="big-num" style="position:absolute;top:-30px;right:-10px;-webkit-text-stroke-color:var(--primary);opacity:.95">02</div>
+<div class="fx col gap12" style="position:relative">
+<span class="tag" style="align-self:flex-start;background:oklch(28% 0.05 258);color:var(--primary)">Step 2</span>
+<h3 class="disp fw6" style="font-size:24px;margin:8px 0 0">Process</h3>
+<p style="font-size:14px;line-height:1.6;margin:0;color:oklch(82% 0.01 260)">Qlixs processes the conversation and turns it into accurate records and clear meeting notes.</p>
+<div class="mono fs11" style="margin-top:16px;color:var(--primary);opacity:.9">// avg processing time: 12s</div>
+</div>
+</div>
+<div class="card reveal d3" style="padding:32px;position:relative;overflow:hidden">
+<div class="big-num" style="position:absolute;top:-30px;right:-10px;opacity:.9">03</div>
+<div class="fx col gap12" style="position:relative">
+<span class="tag" style="align-self:flex-start">Step 3</span>
+<h3 class="disp fw6" style="font-size:24px;margin:8px 0 0">Share</h3>
+<p style="color:var(--muted);font-size:14px;line-height:1.6;margin:0">Access your notes and summaries in real time to share with your clients and team.</p>
+<div class="fx ac gap8" style="margin-top:16px"><span class="mono fs11" style="background:var(--primary-tint);color:var(--primary-dark);padding:4px 8px;border-radius:6px">Share</span><span class="mono fs11" style="background:var(--primary-tint);color:var(--primary-dark);padding:4px 8px;border-radius:6px">Export</span><span class="mono fs11" style="background:var(--primary-tint);color:var(--primary-dark);padding:4px 8px;border-radius:6px">Ask</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="features" style="padding-top:20px">
+<div class="container">
+<div class="fx jb ac wrap gap24" style="margin-bottom:36px">
+<div style="max-width:640px">
+<span class="eyebrow"><span class="dot"></span>Features</span>
+<h2 class="disp" style="font-size:clamp(36px,5vw,64px);font-weight:600;margin:16px 0 0">Everything to <span class="serif">stop</span> taking notes.</h2>
+</div>
+</div>
+
+<div class="grid-bento reveal">
+<div class="card" style="padding:28px;grid-column:span 3;background:var(--primary-tint);border-color:var(--primary-tint)">
+<div class="fx jb ac" style="margin-bottom:14px"><span class="tag" style="background:#fff;color:var(--primary-dark)">✦ AI</span><span class="mono fs11" style="color:var(--primary-dark)">/ask</span></div>
+<h3 class="disp fw6" style="font-size:26px;margin:0 0 8px">Ask Qlixs</h3>
+<p style="color:var(--primary-dark);opacity:.75;font-size:14px;line-height:1.6;margin:0 0 18px">AI chatbot to ask questions about any summary card — get answers, not a transcript search.</p>
+<div style="background:#fff;border-radius:14px;padding:14px 16px">
+<div class="fs13" style="color:var(--muted);margin-bottom:6px">— What did we agree on the budget?</div>
+<div class="fs13"><span class="mono fs11" style="color:#fff;background:var(--primary);padding:2px 6px;border-radius:4px;margin-right:6px">Qlixs</span>Zoom budget goes to finance by Friday; the rest is confirmed.</div>
+</div>
+</div>
+
+<div class="card" style="padding:28px;grid-column:span 3">
+<div class="fx jb ac" style="margin-bottom:14px"><span class="tag">📱 Mobile</span></div>
+<h3 class="disp fw6" style="font-size:26px;margin:0 0 8px">Wherever you are</h3>
+<p style="color:var(--muted);font-size:14px;line-height:1.6;margin:0 0 18px">Launch the Qlixs mobile app to start an interview or conversation from anywhere — one tap and you're recording.</p>
+<div class="fx ac gap12"><div style="width:60px;height:100px;border-radius:14px;background:var(--fg);position:relative"><div style="position:absolute;top:6px;left:50%;transform:translateX(-50%);width:16px;height:3px;background:oklch(30% 0.02 258);border-radius:2px"></div><div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:32px;height:32px;border-radius:50%;background:var(--primary)"></div></div><div class="fx col gap6"><div class="fs13 fw6">iOS · Android</div><div class="mono fs11" style="color:var(--muted)">Unlimited mobile app calls</div></div></div>
+</div>
+
+<div class="card" style="padding:28px;grid-column:span 2">
+<h3 class="disp fw6" style="font-size:22px;margin:0 0 8px">Custom templates</h3>
+<p style="color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 14px">10 templates · unlimited sections.</p>
+<div class="fx col gap6"><div class="fs12" style="padding:8px 12px;border:1px solid var(--line);border-radius:10px">Screening</div><div class="fs12" style="padding:8px 12px;background:var(--primary);color:#fff;border-radius:10px">Standard Interview</div><div class="fs12" style="padding:8px 12px;border:1px solid var(--line);border-radius:10px">Executive · Referee</div></div>
+</div>
+
+<div class="card" style="padding:28px;grid-column:span 2;background:var(--primary);color:#fff;border-color:var(--primary)">
+<span class="stat-num count-up" data-count="100">0</span>
+<div class="fs13 fw6" style="margin-top:4px;opacity:.9">bookings / month</div>
+<div style="height:1px;background:#fff;opacity:.2;margin:16px 0"></div>
+<p style="font-size:13px;line-height:1.5;margin:0;opacity:.9">Schedule client interviews straight from the dashboard.</p>
+</div>
+
+<div class="card" style="padding:28px;grid-column:span 2">
+<h3 class="disp fw6" style="font-size:22px;margin:0 0 8px">Team access</h3>
+<p style="color:var(--muted);font-size:13px;line-height:1.6;margin:0 0 16px">Unlimited team members per meeting, shared templates.</p>
+<div class="fx" style="margin-left:0"><div style="width:32px;height:32px;border-radius:50%;background:var(--primary);border:2px solid var(--card)"></div><div style="width:32px;height:32px;border-radius:50%;background:var(--warm);border:2px solid var(--card);margin-left:-8px"></div><div style="width:32px;height:32px;border-radius:50%;background:oklch(65% 0.22 25);border:2px solid var(--card);margin-left:-8px"></div><div style="width:32px;height:32px;border-radius:50%;background:var(--fg);color:#fff;border:2px solid var(--card);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600">+8</div></div>
+</div>
+
+<div class="card" id="trust" style="padding:28px;grid-column:span 4;position:relative;overflow:hidden">
+<div class="fx jb ac" style="margin-bottom:14px"><span class="tag">🔒 Security</span><span class="mono fs11" style="color:var(--muted)">SOC 2 · GDPR</span></div>
+<h3 class="disp fw6" style="font-size:22px;margin:0 0 8px">Enterprise-grade with Zirilio</h3>
+<p style="color:var(--muted);font-size:14px;line-height:1.6;margin:0;max-width:520px">Partnered with Zirilio, we maintain enterprise-grade security standards and data integrity for our platform.</p>
+</div>
+
+<div class="card" style="padding:28px;grid-column:span 2;background:var(--fg);color:var(--bg);border-color:var(--fg)">
+<h3 class="disp fw6" style="font-size:22px;margin:0 0 8px;color:var(--primary)">PDF reports</h3>
+<p style="font-size:13px;line-height:1.6;margin:0;color:oklch(82% 0.01 260)">Custom branding — your logo on every PDF, ready for the client.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section class="section" id="pricing" style="background:var(--dark);color:var(--bg);border-radius:32px 32px 0 0;margin-top:20px">
+<div class="container">
+<div class="fx jb ac wrap gap24" style="margin-bottom:56px">
+<div style="max-width:720px">
+<span class="eyebrow" style="background:oklch(24% 0.03 258);color:var(--bg);border-color:oklch(30% 0.03 258)"><span class="dot"></span>Pricing</span>
+<h2 class="disp" style="font-size:clamp(36px,5vw,64px);font-weight:600;margin:16px 0 0">Simple, transparent <span class="serif" style="color:var(--primary)">pricing</span>.</h2>
+<p style="color:oklch(70% 0.01 260);font-size:16px;line-height:1.6;margin:16px 0 0;max-width:520px">Every plan includes a free trial. Cancel anytime. No hidden fees.</p>
+</div>
+<div class="fx col gap8">
+<div class="fx ac gap8 fs13" style="color:oklch(80% 0.01 260)"><div class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>28-day free trial of Pro included</div>
+<div class="fx ac gap8 fs13" style="color:oklch(80% 0.01 260)"><div class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>No credit card required</div>
+</div>
+</div>
+
+<div class="grid-3">
+<!-- Freemium -->
+<div class="fx col reveal d1" style="padding:32px;border-radius:20px;background:oklch(22% 0.03 258);border:1px solid oklch(30% 0.03 258)">
+<div class="fx jb ac" style="margin-bottom:16px"><h3 class="disp fw6" style="font-size:22px;margin:0">Freemium</h3><span class="mono fs11" style="color:oklch(70% 0.01 260)">/free</span></div>
+<div style="align-items:baseline" class="fx gap4"><span class="disp fw7" style="font-size:56px;letter-spacing:-.03em">$0</span><span style="color:oklch(70% 0.01 260)">/mo</span></div>
+<p class="fs12" style="color:oklch(70% 0.01 260);margin:8px 0 0;line-height:1.5">For individuals trying out Qlixs — no credit card required. Includes 28-day free trial of Pro plan.</p>
+<a href="#" class="btn btn-outline-light" style="color:var(--bg);width:100%;margin:20px 0 24px">Start Free Trial</a>
+<div class="dashed-line" style="background-image:linear-gradient(90deg,oklch(30% 0.03 258) 50%,transparent 50%);margin-bottom:20px"></div>
+<div class="fx col gap10" style="color:oklch(88% 0.01 260)">
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>4 Basic Templates: Screening, Standard Interview, Executive Interview, Referee</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Create 1 custom template + 1 custom section</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>1-on-1 voice recording &amp; meeting selection</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Mobile app calls</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Integrations (Zoom, desktop compatible)</span></div>
+<div class="plan-feat dim"><span class="tick" style="background:oklch(40% 0.02 258);color:oklch(70% 0.01 260)">−</span><span>Custom Invoicing options not available</span></div>
+</div>
+</div>
+
+<!-- Go Solo -->
+<div class="fx col reveal d2" style="padding:32px;border-radius:20px;background:var(--primary);color:#fff;position:relative;box-shadow:0 24px 60px -20px oklch(60% 0.18 258 / 0.6)">
+<span class="rotate-pos" style="position:absolute;top:-14px;right:24px;background:var(--warm);color:var(--warm-dark);font-family:'Space Grotesk';font-weight:700;font-size:12px;padding:6px 14px;border-radius:100px">★ Most Popular</span>
+<div class="fx jb ac" style="margin-bottom:16px"><h3 class="disp fw6" style="font-size:22px;margin:0">Go Solo</h3><span class="mono fs11" style="opacity:.75">/pro</span></div>
+<div style="align-items:baseline" class="fx gap4"><span class="disp fw7" style="font-size:56px;letter-spacing:-.03em">$89</span><span style="opacity:.85">/mo per user</span></div>
+<p class="fs12" style="margin:8px 0 0;opacity:.85;line-height:1.5">For professionals looking to scale their productivity with full access and priority support.</p>
+<a href="#" class="btn btn-dark" style="background:var(--fg);color:#fff;width:100%;margin:20px 0 24px">Go Solo →</a>
+<div class="dashed-line" style="background-image:linear-gradient(90deg,oklch(100% 0 0 / .3) 50%,transparent 50%);margin-bottom:20px"></div>
+<div class="fx col gap10">
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>10 Custom Templates · unlimited sections</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Unlimited conversations</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>100 bookings per month</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Unlimited mobile app calls</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Team Access · unlimited template sharing</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Integrations: same as Freemium (Zoom, desktop)</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Browser Extension included</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Email Forwarding — share summaries from dashboard or mobile</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>"Ask Qlixs" Support — AI chatbot for any summary card</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Unlimited team members per meeting</span></div>
+<div class="plan-feat fw5"><span class="tick" style="background:#fff;color:var(--primary-dark)"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Custom branding (logo on PDF reports)</span></div>
+<div class="plan-feat dim"><span class="tick" style="background:oklch(90% 0.03 258 / .3);color:#fff">−</span><span>Custom Invoicing options not available</span></div>
+</div>
+</div>
+
+<!-- Go Pro -->
+<div class="fx col reveal d3" style="padding:32px;border-radius:20px;background:oklch(22% 0.03 258);border:1px solid oklch(30% 0.03 258)">
+<div class="fx jb ac" style="margin-bottom:16px"><h3 class="disp fw6" style="font-size:22px;margin:0">Go Pro</h3><span class="mono fs11" style="color:oklch(70% 0.01 260)">/enterprise</span></div>
+<div style="align-items:baseline" class="fx gap4"><span class="disp fw7" style="font-size:56px;letter-spacing:-.03em">$29.75</span><span style="color:oklch(70% 0.01 260)">/week per user</span></div>
+<div class="mono fs11" style="color:oklch(70% 0.01 260);margin-top:4px">≈ $119.00/month per user</div>
+<p class="fs12" style="color:oklch(70% 0.01 260);margin:8px 0 0;line-height:1.5">For teams and enterprises needing full customization, reporting, and 24/7 premium support.</p>
+<a href="#" class="btn btn-outline-light" style="color:var(--bg);width:100%;margin:20px 0 24px">Go Pro →</a>
+<div class="dashed-line" style="background-image:linear-gradient(90deg,oklch(30% 0.03 258) 50%,transparent 50%);margin-bottom:20px"></div>
+<div class="fx col gap10" style="color:oklch(88% 0.01 260)">
+<div class="plan-feat fw6" style="color:var(--primary)"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Everything in Go Solo, plus:</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Unlimited Templates &amp; Sections — adjust custom templates</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Fully customizable branding across PDFs</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>User reports and analytics <span class="mono fs11" style="opacity:.7">(Coming soon)</span></span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>Flexible payment &amp; invoicing (weekly, monthly, annually)</span></div>
+<div class="plan-feat"><span class="tick" style="background:var(--primary);color:#fff"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>24/7 premium support</span></div>
+</div>
+</div>
+</div>
+<div class="fx ac jc" style="margin-top:32px"><a href="#" class="fs13" style="color:oklch(75% 0.01 260);text-decoration:underline">Want detailed pricing information? View Full Pricing →</a></div>
+</div>
+</section>
+
+<section style="background:var(--dark);color:var(--bg);padding:20px 0 100px">
+<div class="container">
+<div class="grad-anim" style="padding:64px 48px;border-radius:24px;background:linear-gradient(135deg,var(--primary) 0%,oklch(50% 0.18 240) 50%,oklch(60% 0.19 280) 100%);color:#fff;position:relative;overflow:hidden">
+<div style="position:absolute;top:-40px;right:-40px;width:220px;height:220px;border:1.5px solid #fff;border-radius:50%;opacity:.25"></div>
+<div style="position:absolute;top:20px;right:60px;width:120px;height:120px;border:1.5px solid #fff;border-radius:50%;opacity:.35"></div>
+<div style="position:relative;max-width:640px">
+<span class="serif" style="font-size:22px;opacity:.85">psst.</span>
+<h3 class="disp fw6" style="font-size:clamp(32px,4.5vw,52px);letter-spacing:-.03em;margin:8px 0 16px;line-height:1.05">One App.<br>Unlimited Opportunities.</h3>
+<p style="font-size:16px;line-height:1.5;margin:0 0 28px;opacity:.9">Qlixs helps teams capture conversations, streamline interviews, and turn meetings into structured data—so you can grow faster and make informed decisions.</p>
+<div class="fx ac gap12 wrap"><a href="#" class="btn" style="background:#fff;color:var(--primary-dark);padding:16px 30px;font-size:16px">Start your free trial</a><a href="#" class="btn" style="border:1.5px solid #fff;color:#fff;padding:16px 24px;font-size:16px;background:transparent">Book a demo</a></div>
+</div>
+</div>
+</div>
+</section>
+
+<footer style="background:var(--dark);color:oklch(70% 0.01 260);padding:60px 0 40px;border-top:1px solid oklch(24% 0.03 258)">
+<div class="container">
+<div class="fx jb wrap gap24" style="margin-bottom:48px">
+<div style="max-width:320px">
+<div class="fx ac gap10" style="margin-bottom:14px"><div class="fx ac jc disp fw7" style="width:34px;height:34px;border-radius:10px;background:var(--primary);color:#fff;font-size:17px">Q</div><span class="disp fw7 fs20" style="color:var(--bg)">Qlixs</span></div>
+<p class="fs13" style="line-height:1.6;margin:0">One App. Unlimited Opportunities. Record — and let Qlixs handle the rest.</p>
+</div>
+<div class="fx gap16" style="flex-wrap:wrap">
+<div class="fx col gap10" style="min-width:150px"><div class="mono fs11 upper" style="color:var(--primary);letter-spacing:.06em">Product</div><a href="browser-extension.html" style="color:inherit;text-decoration:none" class="fs13">Browser Extension</a><a href="mobile.html" style="color:inherit;text-decoration:none" class="fs13">Mobile App</a><a href="pricing.html" style="color:inherit;text-decoration:none" class="fs13">Pricing</a></div>
+<div class="fx col gap10" style="min-width:150px"><div class="mono fs11 upper" style="color:var(--primary);letter-spacing:.06em">Solutions</div><a href="recruitment-meetings.html" style="color:inherit;text-decoration:none" class="fs13">Recruitment and Meetings</a></div>
+<div class="fx col gap10" style="min-width:150px"><div class="mono fs11 upper" style="color:var(--primary);letter-spacing:.06em">Resources</div><a href="help.html" style="color:inherit;text-decoration:none" class="fs13">Help Centre / FAQs</a><a href="security.html" style="color:inherit;text-decoration:none" class="fs13">Compliance / Security</a></div>
+<div class="fx col gap10" style="min-width:150px"><div class="mono fs11 upper" style="color:var(--primary);letter-spacing:.06em">Company</div><a href="about.html" style="color:inherit;text-decoration:none" class="fs13">About</a><a href="contact.html" style="color:inherit;text-decoration:none" class="fs13">Contact</a><a href="privacy.html" style="color:inherit;text-decoration:none" class="fs13">Privacy Policy</a></div>
+</div>
+</div>
+<div class="fx jb wrap gap12" style="padding-top:24px;border-top:1px solid oklch(24% 0.03 258)">
+<span class="fs12 mono">© 2026 Qlixs</span>
+<span class="fs12 mono">We use cookies to enhance your experience.</span>
+</div>
+</div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount(){
+    const root = document;
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12, rootMargin:'0px 0px -60px 0px'});
+    root.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    const hero = root.querySelector('#hero-parallax');
+    if(hero){
+      const spots = hero.querySelectorAll('.spot');
+      hero.addEventListener('mousemove', (e)=>{
+        const r = hero.getBoundingClientRect();
+        const x = (e.clientX - r.left)/r.width - 0.5;
+        const y = (e.clientY - r.top)/r.height - 0.5;
+        spots.forEach((s, i)=>{
+          const str = (i%2 ? -1 : 1) * 40;
+          s.style.transform = `translate(${x*str}px, ${y*str}px)`;
+        });
+      });
+      hero.addEventListener('mouseleave', ()=>{
+        spots.forEach(s=>{ s.style.transform=''; });
+      });
+    }
+
+    const cio = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseFloat(el.dataset.count);
+        const decimals = parseInt(el.dataset.decimals || '0', 10);
+        const suffix = el.dataset.suffix || '';
+        const dur = 1600;
+        const start = performance.now();
+        const step = (t)=>{
+          const p = Math.min((t-start)/dur, 1);
+          const eased = 1 - Math.pow(1-p, 3);
+          const val = target * eased;
+          el.textContent = (decimals ? val.toFixed(decimals) : Math.round(val).toLocaleString()) + suffix;
+          if(p<1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+        cio.unobserve(el);
+      });
+    }, {threshold:0.6});
+    root.querySelectorAll('.count-up').forEach(el=>cio.observe(el));
+  }
+}
+</script>
+</body>
+</html>
